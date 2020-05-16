@@ -1,9 +1,11 @@
   
 {
-    "python.pythonPath": "/Users/serranoarevalo/.local/share/virtualenvs/airbnb-clone-kYONRkCI/bin/python",
+    "python.pythonPath": "C:\\Users\\Choi\\.virtualenvs\\Airbnb_clone-ZPg-bMwi\\Scripts\\python.exe",
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.enabled": true,
+    "editor.formatOnSave": true,
     "python.formatting.provider": "black",
-    "python.linting.flake8Args": ["--max-line-length=88"]
+    "python.linting.flake8Args": ["--max-line-length=88"],
+    "editor.formatOnPaste": true
 }
