@@ -11,6 +11,7 @@ black = "*"
 django = "==2.2.5"
 mysqlclient = "*"
 pillow = "*"
+django-countries = "*"
 
 [requires]
 python_version = "3.7"
