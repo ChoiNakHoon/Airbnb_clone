@@ -21,15 +21,15 @@ class User(AbstractUser):
     LANGUAGE_KOREAN = "ko"
     LANGUAGE_ENGLISH = "en"
     LANGUAGE_SPANISH = "es"
-    LANGUAGE_CHINESE = "cn"
+    LANGUAGE_CHINESE = "zh"
     LANGUAGE_JAPNESE = "jp"
 
     LANGUAGE_CHOICES = (
-        (LANGUAGE_KOREAN, "KOR"),
-        (LANGUAGE_ENGLISH, "ENG"),
-        (LANGUAGE_SPANISH, "ESP"),
-        (LANGUAGE_CHINESE, "CNH"),
-        (LANGUAGE_JAPNESE, "JPN"),
+        (LANGUAGE_KOREAN, "Korean"),
+        (LANGUAGE_ENGLISH, "English"),
+        (LANGUAGE_SPANISH, "Español"),
+        (LANGUAGE_CHINESE, "汉语·中文"),
+        (LANGUAGE_JAPNESE, "日本語"),
     )
 
     CURRENCY_KRW = "krw"
@@ -51,7 +51,7 @@ class User(AbstractUser):
     )
     bio = models.TextField(default="", blank=True)
 
-    birthdate = models.DateField(null=True)
+    birthdate = models.DateField(null=True, blank=True)
     language = models.CharField(
         choices=LANGUAGE_CHOICES, max_length=2, null=True, blank=True
     )
