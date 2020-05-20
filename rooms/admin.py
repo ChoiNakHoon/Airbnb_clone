@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import mark_safe
 from . import models
 
 # Register your models here.
@@ -81,4 +82,18 @@ class RoomAdmin(admin.ModelAdmin):
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 
-    pass
+    """ Photo Admin Definition """
+
+    list_display = (
+        "__str__",
+        "get_thumbnail",
+    )
+
+    # mark_safe
+    # html 코드를 직접 넣기 위한 방법
+    # 위 기능을 사용하지 않으면 장고에서 html tag 및 script 를 사용 할 수 없음
+    # safety 하기 때문에 (해킹 방지)
+    def get_thumbnail(self, obj):
+        return mark_safe('<img width="100px" src="{}"/>'.format(obj.file.url))
+
+    get_thumbnail.short_description = "Thumbnail"
