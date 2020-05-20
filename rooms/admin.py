@@ -13,9 +13,18 @@ class ItemAdmin(admin.ModelAdmin):
         return obj.rooms.count()
 
 
+# Inline-Admin
+# Admin 안에 FK로 묶인 Admin을 넣을 수 있음?
+class PhotoInline(admin.TabularInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     """ Room Admin Definition """
+
+    inlines = (PhotoInline,)
 
     fieldsets = (
         (
@@ -67,6 +76,8 @@ class RoomAdmin(admin.ModelAdmin):
         "house_rule",
         "city",
     )
+
+    raw_id_fields = ("host",)
 
     search_fields = ("^city", "^host__username")
 
