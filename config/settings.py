@@ -138,3 +138,7 @@ STATIC_URL = "/static/"
 
 # 인증에 사용할 커스텀 User 모델 지정 : '앱이름.모델명'
 AUTH_USER_MODEL = "users.User"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+MEDIA_URL = "/media/"
