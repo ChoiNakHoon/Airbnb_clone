@@ -12,6 +12,7 @@ class Review(core_models.TimeStampedModel):
     RATING_THREE = 3
     RATING_FOUR = 4
     RATING_FIVE = 5
+
     RATING_CHOICES = (
         (RATING_DEFAULT, "I need some help!"),
         (RATING_ONE, "I'm really upset"),
@@ -20,6 +21,7 @@ class Review(core_models.TimeStampedModel):
         (RATING_FOUR, "Feeling Great!"),
         (RATING_FIVE, "Fantistic"),
     )
+
     reivew = models.TextField()
     cleanliness = models.IntegerField(choices=RATING_CHOICES, default=RATING_DEFAULT)
     accuracy = models.IntegerField(choices=RATING_CHOICES, default=RATING_DEFAULT)
