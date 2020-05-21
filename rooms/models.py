@@ -100,3 +100,7 @@ class Room(core_models.TimeStampedModel):
         return round(total_avg / len(all_reviews), 2)
 
     total_rating.short_description = ".Avg"
+
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        super().save(*args, **kwargs)
