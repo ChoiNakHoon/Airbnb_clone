@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from . import models
+from reviews import models as models_reviews
 
 # Register your models here.
 @admin.register(models.RoomType, models.Amenity, models.Facility, models.HouseRule)
@@ -16,15 +17,22 @@ class ItemAdmin(admin.ModelAdmin):
 # Inline-Admin
 # Admin 안에 FK로 묶인 Admin을 넣을 수 있음?
 class PhotoInline(admin.TabularInline):
+    """ Photo Inline Definition """
 
     model = models.Photo
+
+
+class ReviewInline(admin.TabularInline):
+    """ Review Inline Definition """
+
+    model = models_reviews.Review
 
 
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     """ Room Admin Definition """
 
-    inlines = (PhotoInline,)
+    inlines = (PhotoInline, ReviewInline)
 
     fieldsets = (
         (
@@ -88,6 +96,8 @@ class RoomAdmin(admin.ModelAdmin):
 
     def count_photos(self, obj):
         return obj.photos.count()
+
+    count_photos.short_description = "Photo Count"
 
 
 @admin.register(models.Photo)
