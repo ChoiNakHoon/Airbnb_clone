@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_countries.fields import CountryField
 from core import models as core_models
 from users import models as users_models
@@ -106,3 +107,7 @@ class Room(core_models.TimeStampedModel):
     def save(self, *args, **kwargs):
         self.city = str.capitalize(self.city)
         super().save(*args, **kwargs)
+
+    # Admin side에 유용한 기능. 현재 index의 페이지로 이동
+    def get_absolute_url(self):
+        return reverse("rooms:detail", kwargs={"pk": self.pk})

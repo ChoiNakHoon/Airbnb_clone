@@ -43,19 +43,13 @@ class Command(BaseCommand):
 
         # created_phots는 현재 생성 된 room 숫자 예: 15개라면
         created_photos = seeder.execute()
-        print("CREATED_PHOTOS : {0}".format(created_photos))
-        print("==============================================")
-        print("==============================================")
-        print(f"CREATED_PHOTOS_VALE : {created_photos.values()}")
         # 어째든 얘가 1차 배열로 만들어서
         created_clean = flatten(list(created_photos.values()))
-        print(f"LIST : {created_clean}")
         amenities = room_models.Amenity.objects.all()
         facilities = room_models.Facility.objects.all()
         rules = room_models.HouseRule.objects.all()
         # 여기서 배열 값을 찾아서 그리그리 한다.
         for pk in created_clean:
-            print("여기는 첫 번 째 for문 : {}".format(pk))
             room = room_models.Room.objects.get(pk=pk)
             for i in range(3, random.randint(10, 30)):
                 room_models.Photo.objects.create(
