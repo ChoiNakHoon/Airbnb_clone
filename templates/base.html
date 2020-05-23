@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=s, initial-scale=1.0">
-    <title> {% block page_name%}{% endblock %} | Cbnb</title>
+    <title> {% block page_title%}{% endblock %} | Cbnb</title>
 </head>
 
 <body>
-    {% include "partials/header.html" %}
+    <header>{% include "partials/nav.html" %}
+        {% block search-bar %}
+        {% endblock search-bar %}
+    </header>
     <div>
         {% block content %}
         {% endblock %}
