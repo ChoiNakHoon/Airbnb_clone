@@ -3,14 +3,14 @@
 
 {% block content %}
 <div>
-    <h1>{{room_detail.name}} || {{room_detail.address}}</h1>
+    <h1>{{room.name}} || {{room.address}}</h1>
     <hr color="#9896a4" , size=0.1em>
     <h2>Description</h2>
     <h5>{{room_detail.description}}</h5>
 </div>
 <div>
-    By {{room_detail.host.username}}
-    {% if room_detail.host.superhost%}
+    By {{room.host.username}}
+    {% if room.host.superhost%}
     (superhost)
     {% endif %}
     <hr color="#9896a4" , size=0.1em>
@@ -18,21 +18,21 @@
 <div>
     <h3>Amenity</h3>
     <ul>
-        {% for a in room_detail.amenities.all %}
+        {% for a in room.amenities.all %}
         <li> {{a}} </li>
         {% endfor %}
     </ul>
     <hr color="#9896a4" , size=0.1em>
     <h3>Facility</h3>
     <ul>
-        {% for f in room_detail.facilities.all %}
+        {% for f in room.facilities.all %}
         <li> {{f}} </li>
         {% endfor %}
     </ul>
     <hr color="#9896a4" , size=0.1em>
     <h3>House Rule</h3>
     <ul>
-        {% for h in room_detail.house_rule.all %}
+        {% for h in room.house_rule.all %}
         <li> {{h}} </li>
         {% endfor %}
     </ul>
