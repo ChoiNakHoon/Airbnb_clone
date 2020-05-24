@@ -5,5 +5,5 @@ app_name = "rooms"
 
 urlpatterns = [
     path("<int:pk>", rooms_views.DetailView.as_view(), name="detail"),
-    path("search/", rooms_views.search, name="search"),
+    path("search/", rooms_views.SearchView.as_view(), name="search"),
 ]
