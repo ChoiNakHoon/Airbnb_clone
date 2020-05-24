@@ -14,6 +14,7 @@ class CustomUserAdmin(UserAdmin):
             "Custom Profile",
             {
                 "fields": (
+                    "superhost",
                     "avatar",
                     "gender",
                     "bio",

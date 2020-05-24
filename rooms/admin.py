@@ -42,7 +42,7 @@ class RoomAdmin(admin.ModelAdmin):
                     "host",
                     "name",
                     "description",
-                    "contry",
+                    "country",
                     "city",
                     "address",
                     "price",
@@ -59,7 +59,7 @@ class RoomAdmin(admin.ModelAdmin):
     )
     list_display = (
         "name",
-        "contry",
+        "country",
         "city",
         "price",
         "address",
