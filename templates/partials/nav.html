@@ -1,6 +1,11 @@
 <nav>
-    <a href="{% url 'core:rooms_list' %}">Home</a>
+    <a href="{% url 'core:home' %}">Home</a>
+
     <ul>
-        <li> <a href="{% url 'users:login' %}">Login</a></li>
+        {% if user.is_authenticated %}
+        <li> <a href="{% url 'users:logout' %}">Log out</a></li>
+        {% else %}
+        <li> <a href="{% url 'users:login' %}">Log in</a></li>
+        {% endif %}
     </ul>
 </nav>

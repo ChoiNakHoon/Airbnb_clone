@@ -11,10 +11,11 @@ class LoginForm(forms.Form):
         user = self.cleaned_data.get("user")
         password = self.cleaned_data.get("password")
         try:
-            user = models.User.objects.get(email=user)
+            user = models.User.objects.get(username=user)
             if user.check_password(password):
-                return password
+                return self.cleaned_data
             else:
                 self.add_error("password", forms.ValidationError("Password is wrong"))
+            return user
         except models.User.DoesNotExist:
             self.add_error("user", forms.ValidationError("User does not exist"))
