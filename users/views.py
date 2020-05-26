@@ -19,19 +19,27 @@ class LoginView(FormView):
             login(self.request, login_user)
         return super().form_valid(form)
 
-    # def post(self, request):
-
-    #     form = forms.LoginForm(request.POST)
-    #     if form.is_valid():
-    #         user = form.cleaned_data.get("user")
-    #         password = form.cleaned_data.get("password")
-    #         login_user = authenticate(request, username=user, password=password)
-    #         if login_user is not None:
-    #             login(request, login_user)
-    #             return redirect(reverse("core:home"))
-    #     return render(request, "users/login.html", context={"form": form})
-
 
 def log_out(request):
     logout(request)
     return redirect(reverse("core:home"))
+
+
+class SignupView(FormView):
+    template_name = "users/signup.html"
+    form_class = forms.SignUpForm
+    success_url = reverse_lazy("core:home")
+    initial = {
+        "firstname": "Raccoon",
+        "lastname": "86",
+        "email": "onehub86@likelion.org",
+    }
+
+    def form_valid(self, form):
+        form.save()
+        user = form.cleaned_data.get("user")
+        password = form.cleaned_data.get("password")
+        login_user = authenticate(self.request, username=user, password=password)
+        if login_user is not None:
+            login(self.request, login_user)
+        return super().form_valid(form)
