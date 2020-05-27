@@ -114,18 +114,26 @@ def github_callback(request):
                     name = profile_json.get("name")
                     email = profile_json.get("email")
                     bio = profile_json.get("bio")
-                    # 여기서 현재 user_db에 존재하는지 판단
-                    user = models.User.objects.get(email=email)
-                    if user is not None:
-                        # 있으면
-                        return redirect(reverse("users:login"))
-                    else:
-                        # 없으면 만들자
+                    try:
+                        # 여기서 현재 user_db에 존재하는지 판단
+                        user = models.User.objects.get(email=email)
+                        if user.login_method != models.User.LOGIN_GITHUB:
+                            # 로그인 시도 했을 때 GitHub가 아니라면
+                            raise GithubException()
+                    except models.User.DoesNotExist:
+                        # user가 데이터베이스 없다면 생성
                         user = models.User.objects.create(
-                            username=email, first_name=name, bio=bio
+                            username=email,
+                            email=email,
+                            first_name=name,
+                            bio=bio,
+                            login_method=models.User.LOGIN_GITHUB,
                         )
-                        login(request, user)
-                        return redirect(reverse("core:home"))
+                        # 소셜로그인 경우 꼭 필요함.
+                        user.set_unusable_password()
+                        user.save()
+                    login(request, user)
+                    return redirect(reverse("core:home"))
                 else:
                     # None면 제대로 가져 온게 아니기 때문에 GitHubException 호출
                     raise GithubException()
