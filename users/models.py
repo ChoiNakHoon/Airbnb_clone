@@ -1,4 +1,9 @@
+import uuid
+from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractUser
+from django.utils.html import strip_tags
+from django.template.loader import render_to_string
 from django.db import models
 
 # Create your models here.
@@ -50,7 +55,36 @@ class User(AbstractUser):
     bio = models.TextField(blank=True)
 
     birthdate = models.DateField(blank=True, null=True)
-    language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, blank=True, default=LANGUAGE_KOREAN)
-    currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW)
+    language = models.CharField(
+        choices=LANGUAGE_CHOICES, max_length=2, blank=True, default=LANGUAGE_KOREAN
+    )
+    currency = models.CharField(
+        choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW
+    )
 
-    superhost = models.BooleanField(default="False")
+    superhost = models.BooleanField(default=False)
+    email_verified = models.BooleanField(default=False)
+    email_secret = models.CharField(max_length=20, default="", blank=True)
+
+    # 메일 인증 하기 위한 메소드
+    # uuid로 key값을 생성하여 secret 변수에 넣음
+    def verify_email(self):
+        print("here")
+        if self.email_verified is False:
+            secret = uuid.uuid4().hex[:20]
+            # email_secret에 secret 값을 넣음
+            self.email_secret = secret
+            # 그리고 sendmail로 인증 메일을 보냄.
+            html_message = render_to_string(
+                "emails/verify_email.html", {"secret": secret,}
+            )
+            send_mail(
+                "Verify Airbnb Account",  # 제목
+                strip_tags(html_message),  # 인증 링크
+                settings.EMAIL_FROM,  # 보내는 이메일 주소
+                [self.email],  # 받는 이메일 주소
+                fail_silently=False,  # 에러 여부
+                html_message=html_message,
+            )
+            self.save()
+        return

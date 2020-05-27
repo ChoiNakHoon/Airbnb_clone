@@ -143,3 +143,13 @@ AUTH_USER_MODEL = "users.User"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"
+
+# Email Configuration
+# dotenv 사용해서 .env파일 내용을 read
+# manage.py에 import dotenv 한 후 main에서 main()호출 이전에 dotenv.read_dotenv()
+# 이후 읽을 내용을 os.environ.get을 이용해서 읽어 옴
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = os.environ.get("MAILGUN_NAME")
+EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
+EMAIL_FROM = "raccoon86@sandbox45b097339b334e6da4a029156dba7363.mailgun.org"
