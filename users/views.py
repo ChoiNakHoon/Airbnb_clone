@@ -1,4 +1,5 @@
 import os
+import requests
 from django.views.generic import FormView
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
@@ -63,15 +64,75 @@ def complete_verification(request, key):
 
 
 def github_login(self):
-    pass
-
-
-def github_callback(request):
     client_id = os.environ.get("GH_ID")
     redirect_uri = "http://127.0.0.1:8000/users/login/github/callback"
     return redirect(
         f"https://github.com/login/oauth/authorize/?client_id={client_id}&redirect_url={redirect_uri}&scope=read:user"
     )
+
+
+class GithubException(Exception):
+    pass
+
+
+def github_callback(request):
+    try:
+        # GitHub에서 로그인 인증 된 이후 설정된 리다이렉트 url로 code 전송
+        code = request.GET.get("code", None)
+        # GH_ID, GH_SECRET
+        client_id = os.environ.get("GH_ID")
+        client_secret = os.environ.get("GH_SECRET")
+
+        if code is not None:
+            # requests api를 이용해서 post
+            result = requests.post(
+                f"https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
+                headers={"Accept": "application/json"},
+            )
+            result_json = result.json()
+            json_error = result_json.get("error", None)
+            if json_error is not None:
+                # 에러 나면 GithubException 호출
+                raise GithubException()
+            else:
+                # 에러가 나지 않으면 access_token을 가져 온 다음
+                access_token = result_json.get("access_token", None)
+                # user_api를 호출한다. headers에 access_token을 넣는다.
+                profile_request = requests.get(
+                    "https://api.github.com/user",
+                    headers={
+                        "Authorization": f"token {access_token}",
+                        "Accept": "application/json",
+                    },
+                )
+                # 응답 받은 json array를 저장 한 다음
+                profile_json = profile_request.json()
+                # login data를 가져 온다.
+                username = profile_json.get("login", None)
+                if username is not None:
+                    # None 아니면 제대로 user_api json을 가져 온 것이니깐 원하는 data를 가져 온다.
+                    name = profile_json.get("name")
+                    email = profile_json.get("email")
+                    bio = profile_json.get("bio")
+                    # 여기서 현재 user_db에 존재하는지 판단
+                    user = models.User.objects.get(email=email)
+                    if user is not None:
+                        # 있으면
+                        return redirect(reverse("users:login"))
+                    else:
+                        # 없으면 만들자
+                        user = models.User.objects.create(
+                            username=email, first_name=name, bio=bio
+                        )
+                        login(request, user)
+                        return redirect(reverse("core:home"))
+                else:
+                    # None면 제대로 가져 온게 아니기 때문에 GitHubException 호출
+                    raise GithubException()
+        else:
+            raise GithubException()
+    except GithubException:
+        return redirect(reverse("users:login"))
 
 
 def kakao_login(self):
