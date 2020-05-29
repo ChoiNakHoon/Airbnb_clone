@@ -216,3 +216,7 @@ uploads
 env/
 ENV/
 enb.bak/
+
+#Node.js & tailwind CSS
+
+node_modules/
