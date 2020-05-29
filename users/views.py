@@ -4,6 +4,7 @@ from django.views.generic import FormView
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
+from django.core.files.base import ContentFile
 from . import forms
 from . import models
 
@@ -163,7 +164,7 @@ class KakaoException(Exception):
 
 def kakao_callback(request):
     try:
-        code = request.GET.get("code")
+        code = request.GET.get("code", None)
         client_id = os.environ.get("KAKAO_ID")
         redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
         api_request = requests.post(
@@ -206,6 +207,12 @@ def kakao_callback(request):
             # 소셜로그인 비밀번호 필요 없음
             user.set_unusable_password
             user.save()
+            if profile_image is not None:
+                # 이미지가 있으면
+                photo_request = requests.get(profile_image)
+                user.avatar.save(
+                    f"{nickname}-avatar.jpg", ContentFile(photo_request.content),
+                )
         login(request, user)
         return redirect(reverse("core:home"))
     except Exception:
