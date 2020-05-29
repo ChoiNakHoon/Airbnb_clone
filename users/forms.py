@@ -1,8 +1,11 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from . import models
 
 
 class LoginForm(forms.Form):
+
+    """ Login Form Definition """
 
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -21,38 +24,13 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(forms.ModelForm):
+class SignUpForm(UserCreationForm):
+
+    """ SignUp Form Definition """
+
+    # UserCreationForm 사용
+    email = forms.EmailField()
+
     class Meta:
         model = models.User
-        fields = ("first_name", "last_name", "email")
-
-    password = forms.CharField(widget=forms.PasswordInput)
-    password1 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
-
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        try:
-            models.User.objects.get(email=email)
-            raise forms.ValidationError(
-                "That email is already taken", code="existing_user"
-            )
-        except models.User.DoesNotExist:
-            return email
-
-    # cleaned_apssword1만 받아오는 건 흐름 상 password가 먼저 받기 때문에 동시에 비교가 안 되서?
-    def clean_password1(self):
-        password = self.cleaned_data.get("password")
-        password1 = self.cleaned_data.get("password1")
-        print(f"password : {password}")
-        print(f"password1 : {password1}")
-        if password != password1:
-            raise forms.ValidationError("입력하신 비밀번호가 맞지 않습니다!")
-        return password
-
-    def save(self, *args, **kwargs):
-        user = super().save(commit=False)
-        email = self.cleaned_data.get("email")
-        password = self.cleaned_data.get("password")
-        user.username = email
-        user.set_password(password)
-        user.save()
+        fields = ("email",)
