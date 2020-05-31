@@ -1,13 +1,11 @@
-<nav>
-    <a href="{% url 'core:home' %}">Home</a>
-
-    <ul>
-        {% if user.is_authenticated %}
-        <li> <a href="{% url 'users:logout' %}">Log out</a></li>
-        {% else %}
-        <li> <a href="{% url 'users:login' %}">Log in</a></li>
-        <li> <a href="{% url 'users:signup' %}">Sign up</a></li>
-        {% endif %}
-
-    </ul>
-</nav>
+<ul class="flex items-center text-sm font-semibold">
+    {% if user.is_authenticated %}
+    <li class="ml-6 py-1 border-b-2 border-white hover:border-blue-400"> <a href="{% url 'users:logout' %}">Log out</a>
+    </li>
+    {% else %}
+    <li class="ml-6 py-1 border-b-2 border-white hover:border-blue-400"> <a href="{% url 'users:login' %}">Log in</a>
+    </li>
+    <li class="ml-6 py-1 border-b-2 border-white hover:border-blue-400"> <a href="{% url 'users:signup' %}">Sign up</a>
+    </li>
+    {% endif %}
+</ul>

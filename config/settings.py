@@ -134,9 +134,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-STATICFILES_DIR = os.path.join(BASE_DIR, "static")
-
 STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # 인증에 사용할 커스텀 User 모델 지정 : '앱이름.모델명'
 AUTH_USER_MODEL = "users.User"

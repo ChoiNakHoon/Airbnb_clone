@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% block page_title %} Search {% endblock %}
 
-{% block content %}
+{% block search-bar %}
 
 <h2>Search!</h2>
 <form method="GET" action="{% url 'rooms:search' %}">
     {{form.as_p}}
     <button>Search</button>
 </form>
-
-<hr color="#9896a4" , size=0.1em>
 
 <h2>Result</h2>
 
@@ -30,4 +28,4 @@
 {% endif %}
 
 
-{% endblock %}
+{% endblock search-bar%}
