@@ -2,23 +2,32 @@
 {% block page_title %} Home {% endblock %}
 
 {% block content %}
-<!-- 현재 데이터 베이스에 있는 방 이름과 가격을 가져 옵니다. -->
-{% for room in rooms %}
-<a href="{% url 'rooms:detail' room.id %}">
-    <h5>{{room.name}} / ${{room.price}}</h5>
-</a>
-{% endfor %}
 
-<!-- 이전 페이지가 있다면 -->
-{% if page_obj.has_previous %}
-<a href="?page={{page_obj.previous_page_number}}"> 이전 </a>
-{% endif%}
+<div class="container mx-auto">
 
-Page {{page_obj.number}} of {{paginator.num_pages}}
+    <div class="bg-gray-800 h-50vh mt-32 rounded-xl mt-32 mb-24 bg-cover bg-center"
+        style="background-image: url(https://images.unsplash.com/photo-1555425293-8b30cde0f787?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1214&q=80);">
+    </div>
 
-<!-- 다음 페이지가 있다면 -->
-{% if page_obj.has_next %}
-<a href="?page={{page_obj.next_page_number}}"> 다음 </a>
-{% endif %}
+    <div class="flex flex-wrap">
+        <!-- 현재 데이터 베이스에 있는 방 이름과 가격을 가져 옵니다. -->
+        {% for room in rooms %}
+        <!-- for-in 통해 넘겨준 room variavble 인자 넘길때 띄워쓰기 하면 안 됨-->
+        {% include 'partials/room_card.html' with room=room %}
+        {% endfor %}
+    </div>
 
+    <!-- 이전 페이지가 있다면 -->
+    {% if page_obj.has_previous %}
+    <a href="?page={{page_obj.previous_page_number}}"> 이전 </a>
+    {% endif%}
+
+    Page {{page_obj.number}} of {{paginator.num_pages}}
+
+    <!-- 다음 페이지가 있다면 -->
+    {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}"> 다음 </a>
+    {% endif %}
+
+</div>
 {% endblock %}

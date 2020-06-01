@@ -111,3 +111,8 @@ class Room(core_models.TimeStampedModel):
     # Admin side에 유용한 기능. 현재 index의 페이지로 이동
     def get_absolute_url(self):
         return reverse("rooms:detail", kwargs={"pk": self.pk})
+
+    # 각 room에서 첫번째 사진을 가져 옵니다.
+    def first_photo(self):
+        (photo,) = self.photos.all()[:1]  # unpacking list
+        return photo.file.url
