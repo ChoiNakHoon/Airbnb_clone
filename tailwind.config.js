@@ -11,6 +11,9 @@ module.exports = {
         xl: "1.5rem",
       },
     },
+    backgroundColor: (theme) => ({
+      kakao: "#FEE500",
+    }),
   },
   variants: {},
   plugins: [],

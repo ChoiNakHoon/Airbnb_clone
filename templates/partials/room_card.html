@@ -1,20 +1,22 @@
 <div class="w-1/4 mb-10 px-2 overflow-hidden">
-    <!-- 첫번째 사진을 가져 온 다음 카드 작업 -->
-    <div class="w-full h-64 bg-cover bg-center rounded-lg shadow-md hover:shadow-lg mb-2"
-        style="background-image: url({{room.first_photo}});">
-    </div>
-    <!-- 카드 아래 text 링크 css 작업  -->
-    <div class="flex justify-between w-full truncate">
-        <div class="w-5/6 overflow-hidden">
-            {% if room.host.superhost %}
-            <span
-                class="mr-px uppercase font-medium text-xs border border-black text-black rounded py-px px-1">superhost</span>
-            {% endif%}
-            <span class="text-sm text-gray-600 font-light">{{room.city}}, {{room.country.name}}</span>
+    <a href="{% url 'rooms:detail' room.pk %}">
+        <!-- 첫번째 사진을 가져 온 다음 카드 작업 -->
+        <div class="w-full h-64 bg-cover bg-center rounded-lg shadow-md hover:shadow-lg mb-2"
+            style="background-image: url({{room.first_photo}});">
         </div>
-        <span class="text-sm flex items-center font-bold">
-            <i class="fas fa-star text-red-400 text-xs mr-1 "></i>{{room.total_rating}}
-        </span>
-    </div>
-    <span class="text-black w-11/12 truncate block">{{room.name}}</span>
+        <!-- 카드 아래 text 링크 css 작업  -->
+        <div class="flex justify-between w-full truncate">
+            <div class="w-5/6 overflow-hidden">
+                {% if room.host.superhost %}
+                <span
+                    class="mr-px uppercase font-medium text-xs border border-black text-black rounded py-px px-1">superhost</span>
+                {% endif%}
+                <span class="text-sm text-gray-600 font-light">{{room.city}}, {{room.country.name}}</span>
+            </div>
+            <span class="text-sm flex items-center font-bold">
+                <i class="fas fa-star text-red-400 text-xs mr-1 "></i>{{room.total_rating}}
+            </span>
+        </div>
+        <span class="text-black w-11/12 truncate block">{{room.name}}</span>
+    </a>
 </div>
