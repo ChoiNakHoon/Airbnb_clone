@@ -10,10 +10,11 @@ module.exports = {
       borderRadius: {
         xl: "1.5rem",
       },
+      backgroundColor: {
+        kakao: "#FEE500",
+        facebook: "#3b5998",
+      },
     },
-    backgroundColor: (theme) => ({
-      kakao: "#FEE500",
-    }),
   },
   variants: {},
   plugins: [],

@@ -4,12 +4,18 @@
 {% block search-bar %}
 {% endblock search-bar %}
 {% block content %}
-<div class="container xl:w-1/4 lg:w-5/12 md:w-1/2 mx-auto my-10 flex flex-col items-center border border-gray-400">
+<div class="container xl:w-1/4 lg:w-5/12 md:w-1/2 mx-auto my-10 flex flex-col items-center p-6 border border-gray-400">
     {% include "partials/social_login.html" %}
-    <form method="post" action="{% url 'users:login'%}">
+    <form class="w-full flex flex-col items-center" method="post" action="{% url 'users:login'%}">
         {% csrf_token %}
-        {{form.as_p}}
-        <button>Login</button>
+        <input type="Email" placeholder="Email Address" class="mb-3">
+        <input type="Password" placeholder="Password" class="mb-3">
+        <button class="btn text-white bg-red-400">Login</button>
     </form>
+
+    <div class="mt-5 font-light">
+        <span class="mr-2">Don't have an account?</span>
+        <a class="text-teal-500 font-medium" href="{% url 'users:signup' %}">Sign up</a>
+    </div>
 </div>
 {% endblock content %}
