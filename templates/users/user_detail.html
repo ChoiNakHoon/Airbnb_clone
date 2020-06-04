@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block page_title %}
+{{user_obj.first_name}}'s Profile
+{% endblock page_title%}
+
+{% block content %}
+<div class="container xl:w-1/4 lg:w-5/12 md:w-1/2 mx-auto my-10 flex flex-col items-center p-6 border border-gray-400">
+
+    {% include 'mixins/user_avatar.html' with user=user_obj %}
+    <div class="flex items-center">
+        <span class="text-3xl mt-1">{{user_obj.first_name}}</span>
+        {% if user_obj.superhost %}
+        <i class="fas fa-check-circle text-teal-500 ml-1"></i>
+        {% else %}
+        <i class="fas fa-minus-circle text-red-500 ml-1"></i>
+        {% endif %}
+    </div>
+    <span class="text-lg text-center">{{user_obj.bio}}</span>
+
+    {% if user == user_obj %}
+    <a href="#" class="btn_link mt-2">Edit Profile</a>
+    {% endif %}
+</div>
+{% if user_obj.rooms.all %}
+<div class="container mx-auto pb-10 flex flex-col items-center">
+    <h3 class="text-2xl font-medium mb-1">{{user_obj.first_name}}'s Rooms</h3>
+    <div class="w-full flex flex-wrap items-center">
+        <!-- 현재 데이터 베이스에 있는 방 이름과 가격을 가져 옵니다. -->
+        {% for room in user_obj.rooms.all %}
+        <!-- for-in 통해 넘겨준 room variavble 인자 넘길때 띄워쓰기 하면 안 됨-->
+        {% include 'mixins/room_card.html' with room=room %}
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="h-auto my-75vh">
+</div>
+{% endif %}
+
+{% endblock content %}

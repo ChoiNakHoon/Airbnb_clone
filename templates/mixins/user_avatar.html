@@ -1,0 +1,8 @@
+<!-- 프로필 사진 -->
+{% if user.avatar %}
+<img class="h-20 w-20 rounded-full" src="{{user.avatar.url}}" />
+{% else %}
+<div class="h-20 w-20 bg-blue-500 rounded-full text-white justify-center flex items-center">
+    <span class="text-3xl">{{user.first_name|first}}</span>
+</div>
+{% endif %}

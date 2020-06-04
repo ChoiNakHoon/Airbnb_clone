@@ -19,6 +19,10 @@
   @apply text-center rounded-sm py-4 font-light w-full;
 }
 
+.btn_link {
+  @apply text-center rounded-lg py-2 font-light w-full bg-red-400 text-white;
+}
+
 .form_login {
   @apply rounded-sm py-4 font-light w-full text-left border border-gray-600 px-5;
   &:focus {
@@ -40,4 +44,37 @@ form {
   }
 }
 
+@keyframes messageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  5% {
+    opacity: 1;
+    transform: translateY(50px);
+  }
+  95% {
+    opacity: 1;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+.message {
+  animation: messageFadeIn 5s ease-in-out forwards;
+  &.error {
+    @apply bg-red-600;
+  }
+  &.info {
+    @apply bg-blue-500;
+  }
+  &.success {
+    @apply bg-green-500;
+  }
+  &.warning {
+    @apply bg-kakao;
+  }
+}
 @tailwind utilities;

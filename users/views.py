@@ -1,6 +1,6 @@
 import os
 import requests
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -26,6 +26,7 @@ class LoginView(FormView):
 
 
 def log_out(request):
+    messages.warning(request, f"See you later {request.user.first_name}")
     logout(request)
     return redirect(reverse("core:home"))
 
@@ -181,7 +182,6 @@ def kakao_callback(request):
             data=params,
         )
         profile_json = user_request.json()
-        print(profile_json)
         email = profile_json.get("kakao_account").get("email", None)
 
         if email is None:
@@ -218,3 +218,9 @@ def kakao_callback(request):
     except KakaoException as e:
         messages.error(request, e)
         raise KakaoException()
+
+
+class UserProfileView(DetailView):
+
+    model = models.User
+    context_object_name = "user_obj"

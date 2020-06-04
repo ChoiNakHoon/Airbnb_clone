@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractUser
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
+from django.shortcuts import reverse
 from django.db import models
 
 # Create your models here.
@@ -79,10 +80,12 @@ class User(AbstractUser):
         max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL
     )
 
+    def get_absolute_url(self):
+        return reverse("users:profile", kwargs={"pk": self.pk})
+
     # 메일 인증 하기 위한 메소드
     # uuid로 key값을 생성하여 secret 변수에 넣음
     def verify_email(self):
-        print("here")
         if self.email_verified is False:
             secret = uuid.uuid4().hex[:20]
             # email_secret에 secret 값을 넣음
