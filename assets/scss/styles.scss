@@ -30,9 +30,19 @@
   }
 }
 
+textarea {
+  resize: none;
+  height: 100px;
+}
+
 form {
-  .input {
-    @apply mb-3;
+  .common_input {
+    @apply rounded-sm py-4 font-light w-full text-left border border-gray-600 px-5 mb-3;
+    input {
+      &:focus {
+        @apply outline-none border-teal-600;
+      }
+    }
     &.has_error {
       input {
         @apply bg-red-200 border-red-200;

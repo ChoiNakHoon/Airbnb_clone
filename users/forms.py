@@ -8,14 +8,10 @@ class LoginForm(forms.Form):
     """ Login Form Definition """
 
     email = forms.EmailField(
-        widget=forms.EmailInput(
-            attrs={"class": "form_login", "placeholder": "Email Address"}
-        )
+        widget=forms.EmailInput(attrs={"placeholder": "Email Address"})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={"class": "form_login", "placeholder": "Password"}
-        )
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
     )
 
     def clean(self):
@@ -40,27 +36,17 @@ class SignUpForm(forms.ModelForm):
         model = models.User
         fields = ("first_name", "last_name", "email")
         widgets = {
-            "first_name": forms.TextInput(
-                attrs={"class": "form_login", "placeholder": "First Name"}
-            ),
-            "last_name": forms.TextInput(
-                attrs={"class": "form_login", "placeholder": "Last Name"}
-            ),
-            "email": forms.EmailInput(
-                attrs={"class": "form_login", "placeholder": "Email Address"}
-            ),
+            "first_name": forms.TextInput(attrs={"placeholder": "First Name"}),
+            "last_name": forms.TextInput(attrs={"placeholder": "Last Name"}),
+            "email": forms.EmailInput(attrs={"placeholder": "Email Address"}),
         }
 
     password = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={"class": "form_login", "placeholder": "Password"}
-        )
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
     )
 
     password1 = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={"class": "form_login", "placeholder": "Confirm Password"}
-        )
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"})
     )
 
     def clean_email(self):
