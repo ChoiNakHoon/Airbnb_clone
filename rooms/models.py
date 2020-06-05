@@ -116,3 +116,15 @@ class Room(core_models.TimeStampedModel):
     def first_photo(self):
         (photo,) = self.photos.all()[:1]  # unpacking list
         return photo.file.url
+
+    # Room에 4장의 사진을 가져 옵니다.
+    def get_next_four_photo(self):
+        photo = self.photos.all()[1:5]
+        return photo
+
+    # bed가 하나면 1 bed 이후는 beds return
+    def get_beds(self):
+        if self.beds == 1:
+            return "1 bed"
+        else:
+            return f"{self.beds} beds"
