@@ -1,8 +1,12 @@
 from django.http import Http404
 from django.views.generic import ListView, DetailView, View, UpdateView
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django_countries import countries
+from django.urls import reverse_lazy
 from rooms import models as rooms_models
 from users import mixins as user_mixins
 from . import forms
@@ -164,3 +168,32 @@ class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
         if room.host.pk != self.request.user.pk:
             raise Http404()
         return room
+
+
+@login_required
+def delete_photo(request, room_pk, photos_pk):
+    user = request.user
+    try:
+        room = rooms_models.Room.objects.get(pk=room_pk)
+        # room.pk와 현재 로그인 중인 유저 pk가 같지 않다면
+        if room.host.pk != user.pk:
+            messages.error(request, "Can't delete that photo")
+        else:
+            rooms_models.Photo.objects.filter(pk=photos_pk).delete()
+            messages.info(request, "Photo Deleted!")
+        return redirect(reverse("rooms:edit_photos", kwargs={"pk": room_pk}))
+    except rooms_models.Room.DoesNotExists:
+        return redirect(reverse("core:home"))
+
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
+
+    model = rooms_models.Photo
+    template_name = "rooms/photo_edit.html"
+    pk_url_kwarg = "photos_pk"
+    fields = ("caption",)
+    success_message = "Photo Updated."
+
+    def get_success_url(self):
+        room_pk = self.kwargs.get("room_pk")
+        return reverse("rooms:edit_photos", kwargs={"pk": room_pk})

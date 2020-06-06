@@ -7,5 +7,15 @@ urlpatterns = [
     path("<int:pk>/", rooms_views.RoomDetailView.as_view(), name="detail"),
     path("<int:pk>/edit/", rooms_views.EditRoomView.as_view(), name="edit"),
     path("<int:pk>/photos/", rooms_views.RoomPhotosView.as_view(), name="edit_photos"),
+    path(
+        "<int:room_pk>/photos/<int:photos_pk>/delete/",
+        rooms_views.delete_photo,
+        name="delete_photo",
+    ),
+    path(
+        "<int:room_pk>/photos/<int:photos_pk>/update/",
+        rooms_views.EditPhotoView.as_view(),
+        name="update_photo",
+    ),
     path("search/", rooms_views.SearchView.as_view(), name="search"),
 ]
