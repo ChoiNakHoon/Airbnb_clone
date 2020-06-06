@@ -19,4 +19,5 @@ urlpatterns = [
         "verify/<str:key>/", views.complete_verification, name="complete_verification"
     ),
     path("<int:pk>/", views.UserProfileView.as_view(), name="profile"),
+    path("switch_hosting/", views.switch_hosting, name="switch_hosting"),
 ]

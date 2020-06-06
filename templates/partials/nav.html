@@ -1,6 +1,16 @@
 <ul class="flex items-center text-sm font-semibold h-full">
     {% if user.is_authenticated %}
-
+    <li class="nav_link">
+        <a href="{% url 'users:switch_hosting' %}">
+            {% if request.session.is_hosting %}
+            <i class="fas fa-check-circle text-teal-500 ml-1"></i>
+            <span class="ml-1">Host</span>
+            {% else %}
+            <i class="fas fa-minus-circle text-red-500 ml-1"></i>
+            <span class="ml-2">Guest</span>
+            {% endif %}
+        </a>
+    </li>
     <li class="nav_link"><a href="{{user.get_absolute_url}}">Profile</a></li>
     <li class="nav_link"><a href="{% url 'users:logout' %}">Log out</a></li>
     {% else %}
