@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block page_title %} Room Photos Update {% endblock %}
+
+{% block content %}
+<div class="container mx-auto my-10 flex flex-col">
+    {% for photo in room.photos.all %}
+    <div
+        class="mb-8 p-6 rounded-md bg-cover bg-center border border-gray-400 flex justify-between shadow-lg hover:shadow-xl">
+        <div class="flex items-start">
+            <img src="{{photo.file.url}}" alt="room_photo" class="w-32 h-32 rounded-lg shadow-md">
+            <span class="ml-5 text-xl">{{photo.caption}}</span>
+        </div>
+        <div class="flex flex-col justify-center w-2/12">
+            <a href="#" class="btn_link mb-5 shadow-lg hover:shadow-xl bg-teal-400">Edit</a>
+            <a href="#" class="btn_link shadow-lg hover:shadow-xl">Delete</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,8 +1,10 @@
-from django.views.generic import ListView, DetailView, View
+from django.http import Http404
+from django.views.generic import ListView, DetailView, View, UpdateView
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django_countries import countries
 from rooms import models as rooms_models
+from users import mixins as user_mixins
 from . import forms
 
 
@@ -17,7 +19,7 @@ class HomeView(ListView):
     template_name = "rooms/rooms_list.html"
 
 
-class DetailView(DetailView):
+class RoomDetailView(DetailView):
 
     """ DetailView Definition as DetailView """
 
@@ -115,3 +117,50 @@ class SearchView(View):
             form = forms.SearchForm()
 
         return render(request, "rooms/search.html", context={"form": form})
+
+
+class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
+
+    """ Room Update Definition """
+
+    model = rooms_models.Room
+    template_name = "rooms/room_edit.html"
+    fields = (
+        "name",
+        "description",
+        "country",
+        "city",
+        "price",
+        "address",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rule",
+    )
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
+
+
+class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
+
+    """ RoomPhotos View Definition """
+
+    model = rooms_models.Room
+    template_name = "rooms/room_photos.html"
+    # Room을 생성한 유저가 맞다면 Room의 Photo를 가져 온다.
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
