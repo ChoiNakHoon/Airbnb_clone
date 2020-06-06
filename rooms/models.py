@@ -121,10 +121,3 @@ class Room(core_models.TimeStampedModel):
     def get_next_four_photo(self):
         photo = self.photos.all()[1:5]
         return photo
-
-    # bed가 하나면 1 bed 이후는 beds return
-    def get_beds(self):
-        if self.beds == 1:
-            return "1 bed"
-        else:
-            return f"{self.beds} beds"

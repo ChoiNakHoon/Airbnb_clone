@@ -87,4 +87,8 @@ form {
     @apply bg-kakao;
   }
 }
+
+.border-section {
+  @apply border-b border-gray-400 pb-8 mt-8;
+}
 @tailwind utilities;

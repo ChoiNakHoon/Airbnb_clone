@@ -1,8 +1,10 @@
 <!-- 프로필 사진 -->
 {% if user.avatar %}
-<img class="h-20 w-20 rounded-full" src="{{user.avatar.url}}" />
+<!-- 만약 누가 user_avatar를 height, width없이 부른다면 -->
+<img class="{{h_and_w|default:'h-20 w-20'}} rounded-full bg-cover" src="{{user.avatar.url}}" />
 {% else %}
-<div class="h-20 w-20 bg-blue-500 rounded-full text-white justify-center flex items-center">
-    <span class="text-3xl">{{user.first_name|first}}</span>
+<div
+    class="{{h_and_w|default:'h-20 w-20'}} bg-blue-500 rounded-full text-white justify-center flex items-center overflow-hidden">
+    <span class="{{text|default:'text-3xl'}} flex pb-1">{{user.first_name|first}}</span>
 </div>
 {% endif %}
