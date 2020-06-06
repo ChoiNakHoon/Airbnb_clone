@@ -3,6 +3,7 @@
     {{field}}
     {% if field.errors %}
     {% for error in field.errors %}
+    <p></p>
     <span class="text-red-700 font-medium test-sm">{{error}}</span>
     {% endfor %}
     {% endif %}

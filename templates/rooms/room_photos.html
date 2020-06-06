@@ -3,6 +3,11 @@
 
 {% block content %}
 <div class="container mx-auto my-10 flex flex-col">
+
+    <div class="my-5">
+        <a href="{% url 'rooms:add_photo' room.pk %}" class="btn_link w-2/12 block shadow-lg hover:shadow-xl ">Add
+            Photo</a>
+    </div>
     {% for photo in room.photos.all %}
     <div
         class="mb-8 p-6 rounded-md bg-cover bg-center border border-gray-400 flex justify-between shadow-lg hover:shadow-xl">
