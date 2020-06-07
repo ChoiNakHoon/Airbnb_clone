@@ -41,3 +41,34 @@ class CreatePhotoForm(forms.ModelForm):
         room = models.Room.objects.get(pk=pk)
         photo.room = room
         photo.save()
+
+
+class CreateRoomForm(forms.ModelForm):
+    class Meta:
+        model = models.Room
+        fields = (
+            "name",
+            "description",
+            "country",
+            "city",
+            "price",
+            "address",
+            "guests",
+            "beds",
+            "bedrooms",
+            "baths",
+            "check_in",
+            "check_out",
+            "instant_book",
+            "room_type",
+            "amenities",
+            "facilities",
+            "house_rule",
+        )
+
+    def save(self, *args, **kwargs):
+        room = super().save(commit=False)
+        # room을 return하여 form_vaild()로 보낸다.
+        # 이런 logic을 하는 이유는 pk를 view로 보내서 redirect 해서
+        # 새로 생성된 room detail을 바로 보기 위해서
+        return room

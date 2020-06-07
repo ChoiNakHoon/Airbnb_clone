@@ -89,6 +89,8 @@ class Room(core_models.TimeStampedModel):
     amenities = models.ManyToManyField("Amenity", related_name="rooms", blank=True)
     facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
     house_rule = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
+    latitude = models.CharField(max_length=20, default="37.2429359")
+    longitude = models.CharField(max_length=20, default="131.8580873")
 
     def __str__(self):
         return self.name
@@ -114,8 +116,11 @@ class Room(core_models.TimeStampedModel):
 
     # 각 room에서 첫번째 사진을 가져 옵니다.
     def first_photo(self):
-        (photo,) = self.photos.all()[:1]  # unpacking list
-        return photo.file.url
+        try:
+            (photo,) = self.photos.all()[:1]  # unpacking list
+            return photo.file.url
+        except ValueError:
+            return None
 
     # Room에 4장의 사진을 가져 옵니다.
     def get_next_four_photo(self):

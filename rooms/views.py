@@ -200,16 +200,32 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateVie
 
 class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
 
+    """Add Photo View Definition """
+
     model = rooms_models.Photo
     template_name = "rooms/photo_create.html"
     form_class = forms.CreatePhotoForm
-    fields = (
-        "caption",
-        "file",
-    )
 
     def form_valid(self, form):
         pk = self.kwargs.get("pk")
         form.save(pk)
         messages.info(self.request, "Photo Created!")
         return redirect(reverse("rooms:edit_photos", kwargs={"pk": pk}))
+
+
+class UploadRoomView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
+
+    """ Crate Room View Difinition """
+
+    form_class = forms.CreateRoomForm
+    template_name = "rooms/create_room.html"
+
+    def form_valid(self, form):
+        room = form.save()
+        room.host = self.request.user
+        room.save()
+        # Many to Many Field 저장 할려면 database를 저장한다음
+        # form.save_m2m() 해야함.
+        form.save_m2m()
+        messages.success(self.request, "Created Room!!")
+        return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))

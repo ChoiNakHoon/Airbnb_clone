@@ -40,7 +40,6 @@ class Command(BaseCommand):
                 "baths": lambda x: random.randint(1, 5),
             },
         )
-
         # created_phots는 현재 생성 된 room 숫자 예: 15개라면
         created_photos = seeder.execute()
         # 어째든 얘가 1차 배열로 만들어서
@@ -50,7 +49,15 @@ class Command(BaseCommand):
         rules = room_models.HouseRule.objects.all()
         # 여기서 배열 값을 찾아서 그리그리 한다.
         for pk in created_clean:
+            local_data = seeder.faker.location_on_land(coords_only=False)
             room = room_models.Room.objects.get(pk=pk)
+            room.latitude = local_data[0]
+            room.longitude = local_data[1]
+            room.city = local_data[2]
+            room.save()
+            print(
+                f"latitude: {room.latitude} // longitude: {room.longitude} // city:{room.city}"
+            )
             for i in range(3, random.randint(10, 30)):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),

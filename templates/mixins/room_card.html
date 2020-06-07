@@ -1,16 +1,25 @@
+{% load static %}
 <div class="w-1/4 mb-10 px-2 overflow-hidden">
     <a href="{% url 'rooms:detail' room.pk %}">
         <!-- 첫번째 사진을 가져 온 다음 카드 작업 -->
+        {% if room.first_photo is None %}
+        <div class="w-full h-64 rounded-lg shadow-md hover:shadow-lg mb-2">
+            <div class="w-full h-full bg-cover bg-center"
+                style="background-image: url({% static 'img/add_image_error.png'%});">
+            </div>
+        </div>
+        {% else %}
         <div class="w-full h-64 bg-cover bg-center rounded-lg shadow-md hover:shadow-lg mb-2"
             style="background-image: url({{room.first_photo}});">
         </div>
+        {% endif %}
         <!-- 카드 아래 text 링크 css 작업  -->
         <div class="flex justify-between w-full truncate">
             <div class="w-5/6 overflow-hidden">
                 {% if room.host.superhost %}
                 <span
                     class="mr-px uppercase font-medium text-xs border border-black text-black rounded py-px px-1">superhost</span>
-                {% endif%}
+                {% endif %}
                 <span class="text-sm text-gray-600 font-light">{{room.city}}, {{room.country.name}}</span>
             </div>
             <span class="text-sm flex items-center font-bold">
