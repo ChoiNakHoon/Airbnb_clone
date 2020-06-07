@@ -15,3 +15,14 @@ class ReservationAdmin(admin.ModelAdmin):
         "is_progress",
         "is_finished",
     )
+
+
+@admin.register(models.BookedDays)
+class BookedDaysAdmin(admin.ModelAdmin):
+
+    """ BookedDay Admin Definition """
+
+    list_display = (
+        "day",
+        "reservation",
+    )
