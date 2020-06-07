@@ -94,15 +94,45 @@
                 </div>
             </div>
         </div>
-        {% if room.host == user %}
-        <div class="w-1/3">
-            <a href="{% url 'rooms:edit' room.pk %}" class="btn_link block">Edit Button</a>
+        <div class="w-1/3 flex flex-col">
+            {% if room.host == user %}
+            <div class="">
+                <a href="{% url 'rooms:edit' room.pk %}" class="btn_link block">Edit Button</a>
+            </div>
+            {% else %}
+            {% if not request.session.is_hosting %}
+            {% for calendar in room.get_calendars %}
+            <div class="mb-20">
+                <span class="text-center font-medium text-lg block mb-8">{{calendar.get_month}} /
+                    {{calendar.year}}</span>
+                <div class="cal-grid mb-4 font-semibold">
+                    {% for day in calendar.day_names %}
+                    <span class="">{{day}}</span>
+                    {% endfor %}
+                </div>
+                <div class="cal-grid">
+                    {% for day in calendar.get_days %}
+                    {% if day.number != 0 %}
+                    {% if day.past %}
+                    <span
+                        class="bg-gray-200 w-full text-center rounded text-gray-400 p-1 hover:bg-red-500 hover:text-white hover:font-semibold">{{day}}</span>
+                    {% else %}
+                    <span
+                        class="bg-gray-200 w-full text-center rounded text-gray-700 p-1 hover:bg-teal-500 hover:text-white hover:font-semibold">{{day}}</span>
+                    {% endif %}
+                    {% else %}
+                    <span></span>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="">
+                <a href="{% url 'core:home' %}" class="btn_link block">Home Button</a>
+            </div>
+            {% endif %}
         </div>
-        {% else %}
-        <div class="w-1/3">
-            <a href="{% url 'core:home' %}" class="btn_link block">Home Button</a>
-        </div>
-        {% endif %}
     </div>
 
     {% endblock content%}

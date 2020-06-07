@@ -2,7 +2,7 @@
     {% if user.is_authenticated %}
     <li class="nav_link">
         <a href="{% url 'users:switch_hosting' %}">
-            {% if request.session.is_hosting %}
+            {% if request.session.is_hosting and user.superhost%}
             <i class="fas fa-check-circle text-teal-500 ml-1"></i>
             <span class="ml-1">Host</span>
             {% else %}
@@ -11,7 +11,7 @@
             {% endif %}
         </a>
     </li>
-    {% if request.session.is_hosting %}
+    {% if request.session.is_hosting and user.superhost %}
     <li class="nav_link"><a href="{% url 'rooms:create' %}">Create Room</a></li>
     {% endif %}
     <li class="nav_link"><a href="{{user.get_absolute_url}}">Profile</a></li>
