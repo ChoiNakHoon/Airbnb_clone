@@ -49,19 +49,19 @@
             <div class="border-section">
                 <h4 class="font-semibold text-lg mb-5">Amenities</h4>
                 {% for a in room.amenities.all %}
-                <li>{{a}}</li>
+                    <li>{{a}}</li>
                 {% endfor %}
             </div>
             <div class="border-section">
                 <h4 class="font-semibold text-lg mb-5">Facilities</h4>
                 {% for f in room.facilities.all %}
-                <li>{{f}}</li>
+                    <li>{{f}}</li>
                 {% endfor %}
             </div>
             <div class="border-section">
                 <h4 class="font-semibold text-lg mb-5">House Rules</h4>
                 {% for h in room.house_rule.all %}
-                <li>{{h}}</li>
+                    <li>{{h}}</li>
                 {% endfor %}
             </div>
             <div class="mt-8">
