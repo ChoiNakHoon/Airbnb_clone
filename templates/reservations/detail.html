@@ -32,12 +32,28 @@
         </div>
 
         <div class="px-5 py-10">
-            {% if reservation.status == 'pending' %}
-                <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn_link bg-red-600 font-medium px-3 block mb-5">Cancel Reservation</a>
-                {% if reservation.room.host == user %}
-                    <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn_link bg-teal-600 font-medium px-5 block">Confirm Reservation</a>
+        <!-- 예약이 취소되지 않았고 -->
+        {% if reservation.status != 'canceled' %}
+        <!-- 현재 예약이 승인된 상태이지만 기간이 만료가 되었다면 -->
+            {% if reservation.status == 'confirmed' and reservation.is_finished %}
+                <!-- 리뷰를 씁시다 여러분 젠틀맨 레이디스 -->
+                <span class="font-medium text-2xl text-center w-full block mb-5">Write your review</span>
+                <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST" class="flex flex-col mx-auto items-center border border-teal-300">
+                    {% csrf_token %}
+                    {{form}}
+                    <button class="btn_link mt-5">Submit Review</button>
+                </form>
+            {% else %}
+            <!-- 그렇지 않고 현재 예약을 신청한 상태인데 취소를 하고 싶으면 취소 버튼 눌려서 취소 하면 된다.-->
+                {% if reservation.status == 'pending' %}
+                    <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn_link bg-red-600 font-medium px-3 block mb-5">Cancel Reservation</a>
+                    <!-- 현재 접속한 유저가 호스트라면 승인 버튼으로 승인 할 수 있다. -->
+                    {% if reservation.room.host == user %}
+                        <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn_link bg-teal-600 font-medium px-5 block">Confirm Reservation</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}    
+            {% endif %}
+        {% endif %}
         </div>
     </div>
 </div>

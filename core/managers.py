@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class CustomReservationManager(models.Manager):
+class CustomModelManager(models.Manager):
 
     """ CustomREservation Manager Difinition """
 

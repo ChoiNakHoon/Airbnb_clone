@@ -2,7 +2,6 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from core import models as core_models
-from . import managers
 
 
 class BookedDays(core_models.TimeStampedModel):
@@ -29,12 +28,12 @@ class Reservation(core_models.TimeStampedModel):
     """ Reservation Model Definition """
 
     STATUS_PENDING = "pending"
-    STATUS_CONFIRMED = "confiremd"
+    STATUS_CONFIRMED = "confirmed"
     STATUS_CANCELED = "canceled"
 
     STATUS_CHOICES = (
         (STATUS_PENDING, "Pending"),
-        (STATUS_CONFIRMED, "Confiremd"),
+        (STATUS_CONFIRMED, "Confirmed"),
         (STATUS_CANCELED, "Canceled"),
     )
 
@@ -50,8 +49,6 @@ class Reservation(core_models.TimeStampedModel):
         "rooms.Room", related_name="reservations", on_delete=models.CASCADE
     )
 
-    objects = managers.CustomReservationManager()
-
     def __str__(self):
         return "{0} - {1}".format(self.room, self.check_in)
 
@@ -62,8 +59,13 @@ class Reservation(core_models.TimeStampedModel):
     is_progress.boolean = True
 
     def is_finished(self):
+        # 현재 기간이 체크 아웃 시간 보다 지났으면 is_Finished를 반환한다.
         now = timezone.now().date()
-        return now > self.check_out
+        is_finished = now > self.check_out
+        if is_finished:
+            # 지났다면 BookedDay_db에서 해당 정보를 삭제한다.
+            BookedDays.objects.filter(reservation=self).delete()
+        return is_finished
 
     is_finished.boolean = True
 
