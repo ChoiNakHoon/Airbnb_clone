@@ -23,9 +23,9 @@
                 <span class="text-sm text-gray-600 font-light">{{room.city}}, {{room.country.name}}</span>
             </div>
             <span class="text-sm flex items-center font-bold">
-                <i class="fas fa-star text-red-400 text-xs mr-1 "></i>{{room.total_rating}}
+                <i class="fas fa-star text-purple-400 text-xs mr-1 "></i>{{room.total_rating}} <i class="fas fa-heart mr-1 text-red-400 text-xs mx-1"></i>{{room.get_likes_count}}
             </span>
         </div>
-        <span class="text-black w-11/12 truncate block">{{room.name}}</span>
+            <span class="text-black w-11/12 truncate block">{{room.name}}</span>
     </a>
 </div>

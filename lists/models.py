@@ -1,3 +1,4 @@
+from django.shortcuts import reverse
 from django.db import models
 from core import models as core_models
 

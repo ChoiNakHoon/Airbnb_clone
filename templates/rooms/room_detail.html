@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
-{% load is_booked %}
+{% load static i18n is_booked on_favs %}
 {% block page_title %} {{room.name}} {% endblock %}
 
 {% block content %}
@@ -9,7 +8,7 @@
 {% if room.first_photo is None %}
 <div class="-mt-5 container max-w-full h-75vh flex flex-col justify-center items-center">
     <img class="w-1/5 h-1/5 bg-cover bg-center" src="{% static 'img/add_image_error.png' %}" alt="">
-    <span class="text-red-400 text-3xl font-semibold">사진을 추가해주세요</span>
+    <span class="text-red-400 text-3xl font-semibold">Please add a picture.</span>
     {% else %}
     <div class="-mt-5 container max-w-full h-75vh flex mb-4">
         <!-- 첫번째 사진 -->
@@ -26,8 +25,16 @@
     </div>
     <div class="container mx-auto flex flex-row justify-around pb-56">
         <div class="w-1/2">
+            <a href="#" class="rounded-md hover:bg-gray-200 p-1 mr-4"><i class="fas fa-external-link-alt mr-1 text-lg text-teal-400"></i>Share</a>
+            <!-- on_favs -->
+            {% on_favs room as on_favs_boolean %}
+            {% if on_favs_boolean %}
+            <a href="{% url 'lists:toggle_room' room.pk%}?action=remove" class="rounded-md hover:bg-gray-200 p-1 text-sm font-semibold text-red-300"><i class="fas fa-heart mr-1 text-lg text-red-400"></i>Remove From Favourites</a>
+            {% else %}
+            <a href="{% url 'lists:toggle_room' room.pk%}?action=add" class="rounded-md hover:bg-gray-200 p-1 text-sm font-semibold text-red-300"><i class="far fa-heart mr-1 text-lg text-red-400"></i>Save to Favourites</a>
+            {% endif %}
             <div class="flex justify-between">
-                <div>
+                <div class="">
                     <h4 class="text-3xl font-semibold mb-px">{{room.name}}</h4>
                     <span class="font-light text-gray-700">{{room.city}}</span>
                 </div>
@@ -97,10 +104,9 @@
         </div>
         <div class="w-1/3 flex flex-col">
             {% if room.host == user %}
-            <div class="">
                 <a href="{% url 'rooms:edit' room.pk %}" class="btn_link block">Edit Button</a>
-            </div>
             {% else %}
+            <!-- guest 일때 -->
                 {% if not request.session.is_hosting %}
                     {% for calendar in room.get_calendars %}
                     <div class="mb-20">

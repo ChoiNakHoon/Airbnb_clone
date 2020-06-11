@@ -58,6 +58,7 @@ class RoomAdmin(admin.ModelAdmin):
             {"fields": ("amenities", "facilities", "house_rule")},
         ),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths",)}),
+        ("Other", {"fields": ("likes",)}),
     )
     list_display = (
         "name",
@@ -75,6 +76,7 @@ class RoomAdmin(admin.ModelAdmin):
         "count_amenities",
         "count_photos",
         "total_rating",
+        "get_likes_count",
     )
 
     list_filter = (

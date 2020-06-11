@@ -93,6 +93,7 @@ class Room(core_models.TimeStampedModel):
     house_rule = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
     latitude = models.CharField(max_length=20, default="37.2429359")
     longitude = models.CharField(max_length=20, default="131.8580873")
+    likes = models.ManyToManyField("users.User", related_name="posts", blank=True)
 
     def __str__(self):
         return self.name
@@ -139,3 +140,8 @@ class Room(core_models.TimeStampedModel):
         this_month_cal = Calendar(this_year, this_month)
         next_month_cal = Calendar(this_year, next_month)
         return [this_month_cal, next_month_cal]
+
+    def get_likes_count(self):
+        return self.likes.count()
+
+    get_likes_count.short_description = "like_count"
