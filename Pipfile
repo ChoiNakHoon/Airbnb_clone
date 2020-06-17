@@ -8,6 +8,7 @@ flake8 = "*"
 black = "*"
 awsebcli = "*"
 mysqlclient = "*"
+pipenv-to-requirements = "*"
 
 [packages]
 django = "==2.2.5"
@@ -17,7 +18,7 @@ django-countries = "*"
 django-seed = "*"
 django-dotenv = "*"
 requests = "*"
-pipenv-to-requirements = "*"
+pipenv = "*"
 
 [requires]
 python_version = "3.7"
