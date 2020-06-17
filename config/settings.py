@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "y=#fvfg4)h#0$oo0q#t8n1lbp05yljejc6x)17o&7frt!6e76n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG"))
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 # release
-# ALLOWED_HOSTS = ["airbnb-clone.eba-jd6zjmrm.ap-northeast-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["airbnb-clone.eba-jd6zjmrm.ap-northeast-2.elasticbeanstalk.com"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
