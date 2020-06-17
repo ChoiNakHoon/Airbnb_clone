@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block page_title %} Conversation {% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-32 mb-10 h-75vh flex justify-between">
+    <div class="border w-1/4 p-10">
+        <span class="text-center w-full block text-lg font-medium">Conversation between:</span>
+        <div class="flex justify-between items-center mt-10">
+            {% for user in conversation.participants.all %}
+                <div class="flex flex-col items-center">
+                    {% include "mixins/user_avatar.html" with user=user %}
+                    <span class="mt-2 text-gray-500">{{user.first_name}}</span>
+                </div>
+                {% if forloop.first %}
+                    <span class="font-semibold text-2xl pb-6">&</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="flex-grow ml-10">
+        <div class="border h-50vh ">
+            {% for message in conversation.messages.all%}
+                {% if message.user.pk != user.pk %}
+                    <div class="mt-2 mb-10 ml-4">
+                        <span class="text-sm font-medium text-gray-600">{{message.user.first_name}}</span>
+                        <div class="px-4 py-3 w-56 rounded-xl font-semibold bg-gray-400">
+                            {{message.message}}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="mt-2 mb-10 mr-4 flex justify-end">
+                        <div class="px-4 py-3 w-56 rounded-xl font-semibold bg-teal-400 text-white">{{message.message}}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="my-4 flex items-center justify-center">
+            <form class="" method="POST">
+                {% csrf_token %}
+                {{form.message}}
+                <button class="btn_link">Send Comment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
