@@ -25,7 +25,9 @@ SECRET_KEY = "y=#fvfg4)h#0$oo0q#t8n1lbp05yljejc6x)17o&7frt!6e76n"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["airbnb-clone.eba-jd6zjmrm.ap-northeast-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = []
+# release
+# ALLOWED_HOSTS = ["airbnb-clone.eba-jd6zjmrm.ap-northeast-2.elasticbeanstalk.com"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
