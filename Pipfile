@@ -8,7 +8,6 @@ flake8 = "*"
 black = "*"
 pipenv-to-requirements = "*"
 awsebcli = "*"
-mysqlclient = "*"
 
 [packages]
 django = "==2.2.5"
