@@ -16,8 +16,6 @@ django-countries = "*"
 django-seed = "*"
 django-dotenv = "*"
 requests = "*"
-pipenv = "*"
-mysqlclient = "*"
 
 [requires]
 python_version = "3.7"
