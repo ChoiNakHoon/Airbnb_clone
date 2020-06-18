@@ -7,18 +7,17 @@ verify_ssl = true
 flake8 = "*"
 black = "*"
 awsebcli = "*"
-mysqlclient = "*"
 pipenv-to-requirements = "*"
 
 [packages]
 django = "==2.2.5"
-mysqlclient = "*"
 pillow = "*"
 django-countries = "*"
 django-seed = "*"
 django-dotenv = "*"
 requests = "*"
 pipenv = "*"
+mysqlclient = "*"
 
 [requires]
 python_version = "3.7"
