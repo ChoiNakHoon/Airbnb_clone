@@ -17,7 +17,7 @@ django-seed = "*"
 django-dotenv = "*"
 requests = "*"
 pipenv = "*"
-mysqlclient = "*"
+mysqlclient = "==1.4.6"
 
 [requires]
 python_version = "3.7"
