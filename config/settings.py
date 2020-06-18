@@ -27,7 +27,7 @@ DEBUG = False
 
 # ALLOWED_HOSTS = []
 # release
-ALLOWED_HOSTS = ["airbnb-clo.eba-9fwm2hiz.ap-northeast-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["airbnb-clon.eba-3w5ifysy.ap-northeast-2.elasticbeanstalk.com"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -102,7 +102,7 @@ if DEBUG:
             "OPTIONS": {"init_command": 'SET sql_mode="STRICT_TRANS_TABLES"'},
         }
     }
-else:
+elif "RDS_HOSTNAME" in os.environ:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgres",
