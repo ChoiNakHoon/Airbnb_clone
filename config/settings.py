@@ -105,7 +105,7 @@ if DEBUG:
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.mysql",
+            "ENGINE": "django.db.backends.postgres",
             "NAME": os.environ["RDS_DB_NAME"],
             "USER": os.environ["RDS_USERNAME"],
             "PASSWORD": os.environ["RDS_PASSWORD"],
