@@ -27,7 +27,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 # release
-# ALLOWED_HOSTS = [".elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["airbnb-clone.eba-mppmwjwy.ap-northeast-2.elasticbeanstalk.com"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
