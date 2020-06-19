@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "y=#fvfg4)h#0$oo0q#t8n1lbp05yljejc6x)17o&7frt!6e76n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 # release
-ALLOWED_HOSTS = [".elasticbeanstalk.com"]
+# ALLOWED_HOSTS = [".elasticbeanstalk.com"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -90,29 +90,29 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-# if DEBUG:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.mysql",
-#             "NAME": "airbnb_db",
-#             "USER": "my_django",
-#             "PASSWORD": "@hun1013.",
-#             "HOST": "localhost",
-#             "PORT": "3306",
-#             "OPTIONS": {"init_command": 'SET sql_mode="STRICT_TRANS_TABLES"'},
-#         }
-#     }
-# elif "RDS_HOSTNAME" in os.environ:
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgres",
-        "NAME": os.environ["RDS_DB_NAME"],
-        "USER": os.environ["RDS_USERNAME"],
-        "PASSWORD": os.environ["RDS_PASSWORD"],
-        "HOST": os.environ["RDS_HOST"],
-        "PORT": os.environ["RDS_PORT"],
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "airbnb_db",
+            "USER": "my_django",
+            "PASSWORD": "@hun1013.",
+            "HOST": "localhost",
+            "PORT": "3306",
+            "OPTIONS": {"init_command": 'SET sql_mode="STRICT_TRANS_TABLES"'},
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ["RDS_DB_NAME"],
+            "USER": os.environ["RDS_USERNAME"],
+            "PASSWORD": os.environ["RDS_PASSWORD"],
+            "HOST": os.environ["RDS_HOSTNAME"],
+            "PORT": os.environ["RDS_PORT"],
+        }
+    }
 
 
 # Password validation
