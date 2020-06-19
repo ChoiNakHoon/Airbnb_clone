@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "y=#fvfg4)h#0$oo0q#t8n1lbp05yljejc6x)17o&7frt!6e76n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = []
 # release
@@ -90,7 +90,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-if DEBUG:
+if DEBUG is not True:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
