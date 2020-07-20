@@ -2,7 +2,8 @@
 {% block page_title %} Search {% endblock %}
 
 {% block search-bar %}
-
+{% endblock search-bar%}
+{% block content %}
 <h2>Search!</h2>
 <form method="GET" action="{% url 'rooms:search' %}">
     {{form.as_p}}
@@ -10,9 +11,9 @@
 </form>
 
 <h2>Result</h2>
-
+<div class="flex flex-row">
 {% for room in rooms %}
-<h3>{{room.name}} | {{room.city}}</h3>
+{% include 'mixins/room_card.html' with room=room %}
 {% endfor %}
 
 {% if rooms.has_previous %}
@@ -26,6 +27,8 @@
 {% if rooms.has_next %}
 <a href="?{{address}}&page={{rooms.next_page_number}}"> 다음 </a>
 {% endif %}
+</div>
+{% endblock content %}
 
 
-{% endblock search-bar%}
+

@@ -18,5 +18,12 @@
     "gulp-sass": "^4.1.0",
     "node-sass": "^4.14.1",
     "tailwindcss": "^1.4.6"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ChoiNakHoon/Airbnb_clone/issues"
+  },
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "author": "",
+  "license": "ISC"
 }

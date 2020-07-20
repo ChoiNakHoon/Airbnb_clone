@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django_countries import countries
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 from rooms import models as rooms_models
 from users import mixins as user_mixins
 from . import forms
@@ -29,7 +30,7 @@ class RoomDetailView(DetailView):
     model = rooms_models.Room
 
 
-class SearchView(View):
+class SearchView(ListView):
 
     """ SearchView Definition """
 

@@ -25,9 +25,9 @@ SECRET_KEY = "y=#fvfg4)h#0$oo0q#t8n1lbp05yljejc6x)17o&7frt!6e76n"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 # release
-ALLOWED_HOSTS = ["ec2-13-124-123-171.ap-northeast-2.compute.amazonaws.com"]
+# ALLOWED_HOSTS = ["ec2-13-124-123-171.ap-northeast-2.compute.amazonaws.com"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -90,7 +90,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-if DEBUG is not True:
+if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
