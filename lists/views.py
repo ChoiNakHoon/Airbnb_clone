@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, reverse
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import TemplateView
 from users import models as users_models
 from rooms import models as rooms_models
 from . import models as lists_models

@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="flex-grow ml-10">
-        <div class="border h-50vh ">
+        <div class="border h-auto ">
             {% for message in conversation.messages.all%}
                 {% if message.user.pk != user.pk %}
                     <div class="mt-2 mb-10 ml-4">
